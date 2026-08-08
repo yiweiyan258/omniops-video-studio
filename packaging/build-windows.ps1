@@ -18,7 +18,6 @@ if (-not $IsWindows) {
 }
 
 $AppRoot = (Resolve-Path (Join-Path $PSScriptRoot "..")).Path
-$ProjectRoot = (Resolve-Path (Join-Path $AppRoot "../..")).Path
 $BuildRoot = Join-Path $AppRoot ".build"
 $VenvRoot = Join-Path $BuildRoot "venv"
 $BinaryRoot = Join-Path $AppRoot "src-tauri/binaries"

@@ -6,6 +6,9 @@
   "scripts": {
     "dev": "vite --port 1420 --strictPort",
     "build": "tsc --noEmit && vite build",
+    "test:python": "python3 tests/test_omniops_video_studio.py",
+    "quality-gate": "python3 tools/run_quality_gate.py",
+    "hooks:install": "python3 tools/install_git_hooks.py",
     "tauri": "tauri",
     "tauri:dev": "tauri dev",
     "tauri:build": "tauri build",

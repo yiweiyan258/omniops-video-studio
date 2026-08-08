@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+set -eu
+
+PACKAGE_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+APP_ROOT=$(CDPATH= cd -- "$PACKAGE_DIR/.." && pwd)
+CLI=${OMNIOPS_VIDEO_STUDIO_CLI:-"$APP_ROOT/backend/omniops-video-studio-cli.py"}
+PYTHON=${OMNIOPS_VIDEO_PYTHON:-python3}
+
+exec "$PYTHON" "$CLI" "$@"

@@ -1,0 +1,50 @@
+name: Video Studio Quality Gate
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: video-studio-quality-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality-gate:
+    name: quality-gate
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Confirm Rust toolchain
+        run: cargo --version && rustc --version
+
+      - name: Run boundary, build, Rust metadata and 27-test gate
+        run: python3 tools/run_quality_gate.py --format json | tee video-studio-quality-gate.json
+
+      - name: Upload quality-gate evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: video-studio-quality-gate-${{ github.run_id }}
+          path: video-studio-quality-gate.json
+          if-no-files-found: warn
+          retention-days: 14

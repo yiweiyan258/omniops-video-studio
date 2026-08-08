@@ -2,12 +2,12 @@
 
 from pathlib import Path
 
-project_root = Path(SPECPATH).parents[2]
-scripts_root = project_root.parent.parent / "scripts"
+app_root = Path(SPECPATH).resolve().parent
+backend_root = app_root / "backend"
 
 analysis = Analysis(
-    [str(scripts_root / "omniops-video-studio-cli.py")],
-    pathex=[str(scripts_root)],
+    [str(backend_root / "omniops-video-studio-cli.py")],
+    pathex=[str(backend_root)],
     binaries=[],
     datas=[],
     hiddenimports=[],

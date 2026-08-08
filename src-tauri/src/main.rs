@@ -6,21 +6,10 @@ use tauri::{AppHandle, Manager};
 
 fn python_command(script: &Path, arguments: &[String]) -> Command {
     let python = env::var("OMNIOPS_VIDEO_PYTHON").unwrap_or_else(|_| {
-        if !cfg!(windows) {
-            if let Ok(home) = env::var("HOME") {
-                let governed_runtime = PathBuf::from(home)
-                    .join(".hermes")
-                    .join("hermes-agent")
-                    .join(".venv")
-                    .join("bin")
-                    .join("python");
-                if governed_runtime.is_file() {
-                    return governed_runtime.to_string_lossy().to_string();
-                }
-            }
-            "python3".to_string()
-        } else {
+        if cfg!(windows) {
             "python".to_string()
+        } else {
+            "python3".to_string()
         }
     });
     let mut command = Command::new(python);
@@ -66,8 +55,8 @@ fn resolve_cli(app: &AppHandle) -> Result<PathBuf, String> {
     }
 
     let development_cli = PathBuf::from(env!("CARGO_MANIFEST_DIR"))
-        .join("../../..")
-        .join("scripts")
+        .join("..")
+        .join("backend")
         .join("omniops-video-studio-cli.py");
     if development_cli.is_file() {
         return Ok(development_cli);

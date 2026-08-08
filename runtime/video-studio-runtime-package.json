@@ -1,0 +1,68 @@
+{
+  "schema": "omniops.video_studio_runtime_package.v1",
+  "version": "0.4.0",
+  "status": "V1_CREATIVE_INTAKE_READY",
+  "product": "OmniOps Video Studio",
+  "applicationCli": "backend/omniops-video-studio-cli.py",
+  "productionCore": "omniops-video-workbench",
+  "productionCoreRule": "single_canonical_core_no_workflow_fork",
+  "clients": [
+    "desktop",
+    "weixin",
+    "codex"
+  ],
+  "sharedJobStore": {
+    "engine": "sqlite",
+    "environmentRoot": "OMNIOPS_VIDEO_DATA",
+    "defaultRelativePath": ".omniops/video-studio/video-studio.sqlite3"
+  },
+  "commands": [
+    "manifest",
+    "doctor",
+    "analyze",
+    "compile-brief",
+    "submit",
+    "list",
+    "status",
+    "next",
+    "execute",
+    "acceptance"
+  ],
+  "capabilities": {
+    "localVideoCreation": true,
+    "platformIndependentCreation": true,
+    "localMaterialIntake": true,
+    "structuredCreationBrief": true,
+    "creativeDirectionCandidates": true,
+    "referenceVideoBrief": true,
+    "professionalWorkerTeam": true,
+    "sequentialPaidGeneration": true,
+    "localQualityAssurance": true,
+    "localPreview": true,
+    "localExport": true,
+    "platformPublishing": false,
+    "engagementActions": false,
+    "accountControl": false
+  },
+  "requirements": {
+    "platformOrAccount": false,
+    "localMediaRecommended": true
+  },
+  "durationPolicy": {
+    "finalVideoSeconds": {
+      "min": 15,
+      "max": 60
+    },
+    "modelGenerationUnitMaxSeconds": 15,
+    "assembly": "sequential_units_then_local_edit_and_final_qa"
+  },
+  "paidGenerationPolicy": {
+    "explicitAuthorizationPerTask": true,
+    "authorizationReusable": false,
+    "sequentialOnly": true,
+    "automaticRetry": false
+  },
+  "secretsBundled": false,
+  "merchantAssetsBundled": false,
+  "writesExternalSystems": false
+}

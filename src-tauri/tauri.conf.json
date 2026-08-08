@@ -44,8 +44,8 @@
       "icons/icon.ico"
     ],
     "resources": {
-      "../../../scripts/omniops-video-studio-cli.py": "scripts/omniops-video-studio-cli.py",
-      "../../../scripts/omniops_video_studio_lib.py": "scripts/omniops_video_studio_lib.py"
+      "../backend/omniops-video-studio-cli.py": "scripts/omniops-video-studio-cli.py",
+      "../backend/omniops_video_studio_lib.py": "scripts/omniops_video_studio_lib.py"
     },
     "shortDescription": "OmniOps professional video production",
     "longDescription": "Local professional Worker video creation, generation, QA, and export."

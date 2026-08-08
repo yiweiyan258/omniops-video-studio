@@ -6,6 +6,10 @@ This repository contains the desktop application only. The private OmniOps
 control plane, knowledge graph, merchant assets, credentials and runtime
 reports are maintained separately.
 
+The product-side Python application service, CLI, runtime manifest, WeChat
+bridge, and all 27 regression tests are included so this public repository can
+be built and verified without reading the private control plane.
+
 OmniOps Video Studio is the Windows desktop entry for the existing OmniOps
 professional video Worker runtime. The desktop application and WeChat CODEX
 share one application CLI and SQLite task store. The application CLI delegates
@@ -45,6 +49,12 @@ Requirements:
 ```powershell
 npm install
 npm run tauri:dev
+```
+
+Run the same complete quality gate used by GitHub Actions:
+
+```bash
+python3 tools/run_quality_gate.py
 ```
 
 The desktop shell locates the shared application CLI through
