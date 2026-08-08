@@ -38,13 +38,16 @@ jobs:
         run: cargo --version && rustc --version
 
       - name: Run boundary, build, Rust metadata and 27-test gate
-        run: python3 tools/run_quality_gate.py --format json | tee video-studio-quality-gate.json
+        run: |
+          set -o pipefail
+          python3 tools/run_quality_gate.py --format json \
+            | tee "$RUNNER_TEMP/video-studio-quality-gate.json"
 
       - name: Upload quality-gate evidence
         if: always()
         uses: actions/upload-artifact@v6
         with:
           name: video-studio-quality-gate-${{ github.run_id }}
-          path: video-studio-quality-gate.json
+          path: ${{ runner.temp }}/video-studio-quality-gate.json
           if-no-files-found: warn
           retention-days: 14

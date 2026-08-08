@@ -120,6 +120,35 @@ def regression_test_check() -> dict:
     }
 
 
+def workflow_contract_check() -> dict:
+    path = ROOT / ".github" / "workflows" / "video-studio-quality-gate.yml"
+    try:
+        text = path.read_text(encoding="utf-8")
+    except OSError as exc:
+        return {
+            "name": "workflowContract",
+            "ok": False,
+            "path": str(path.relative_to(ROOT)),
+            "error": str(exc),
+        }
+    required = (
+        "set -o pipefail",
+        "$RUNNER_TEMP/video-studio-quality-gate.json",
+        "${{ runner.temp }}/video-studio-quality-gate.json",
+        "actions/checkout@v6",
+        "actions/setup-python@v6",
+        "actions/setup-node@v6",
+        "actions/upload-artifact@v6",
+    )
+    missing = [item for item in required if item not in text]
+    return {
+        "name": "workflowContract",
+        "ok": not missing,
+        "path": str(path.relative_to(ROOT)),
+        "missing": missing,
+    }
+
+
 def evaluate() -> dict:
     checks = [
         boundary_check(),
@@ -128,6 +157,7 @@ def evaluate() -> dict:
         command_check("typescriptViteBuild", ["npm", "run", "build"]),
         cargo_metadata_check(),
         regression_test_check(),
+        workflow_contract_check(),
     ]
     failed = [check["name"] for check in checks if not check.get("ok")]
     return {
